@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -17,33 +18,35 @@ public class MenuUIHandler : MonoBehaviour
     {
         if (MainManager.Instance != null)
         {
-            inputName.text = MainManager.nameText;
+            inputName.text = MainManager.InputName;
 
-            if (MainManager.bestScoreName != "")
+            if (MainManager.BestScoreName != "")
             {
-                scoreText.text = "Best Score: " + MainManager.bestScoreName;
+                scoreText.text = "Best Score: " + MainManager.BestScoreName;
             }
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        MainManager.nameText = inputName.text;
     }
 
     public void StartNew()
     {
+        MainManager.InputName = inputName.text;
         SceneManager.LoadScene(1); 
     }
 
     public void Exit()
     {
+        MainManager.Instance.SaveScoreName(); 
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
         Application.Quit(); 
 #endif
     }
+
 }
