@@ -10,13 +10,19 @@ using UnityEditor;
 
 public class MenuUIHandler : MonoBehaviour
 {
-    public TMP_InputField inputName; 
+    public TMP_InputField inputName;
+    public TextMeshProUGUI scoreText; 
     // Start is called before the first frame update
     void Start()
     {
-        if(MainManager.Instance != null)
+        if (MainManager.Instance != null)
         {
-             inputName.text = MainManager.nameText;
+            inputName.text = MainManager.nameText;
+
+            if (MainManager.bestScoreName != "")
+            {
+                scoreText.text = "Best Score: " + MainManager.bestScoreName;
+            }
         }
 
     }

@@ -8,6 +8,7 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
     public static string nameText;
+    public static string bestScoreName; 
 
     public Brick BrickPrefab;
     public int LineCount = 6;
@@ -22,16 +23,18 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    private int bestScore; 
+
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
-            Destroy(gameObject); 
-            return; 
+            Destroy(gameObject);
+            return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); 
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -52,7 +55,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        BestScoreNameText.text = "Best Score: " + nameText + " : 0"; 
+        BestScoreNameText.text = "Best Score: " + bestScoreName;
     }
 
     private void Update()
@@ -76,6 +79,11 @@ public class MainManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+
+        }
+        else
+        {
+            SetBestScore();
         }
     }
 
@@ -89,5 +97,16 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    private void SetBestScore()
+    {
+        if(m_Points >= bestScore)
+        {
+            bestScore = m_Points;
+            bestScoreName = nameText + ": " + bestScore;
+
+            BestScoreNameText.text = "Best Score: " + bestScoreName;
+        }
     }
 }
